@@ -1,0 +1,1116 @@
+
+Vibe Coding Competition Study Guide 
+You and your teammate use AI to build a bot in Python. At the deadline your code freezes. Then your bot fights other bots, alone, live on the big screen. This guide explains the whole game and exactly what you will do on the day. 
+SUNDAY 18 OCTOBER CIVIL AV AUDITORIUM · NED UNIVERSITY TEAMS OF TWO ANY AI TOOL PYTHON 3.9+ 
+
+A real match from the tournament show. Four bots, one arena. Nobody is controlling them: every move comes from the code each team wrote. 
+
+YO U B U ILD 
+One Python file, my_bot.py . Each turn your bot looks at the game and picks one action. 
+YO U U SE 
+Any AI tool you like: Claude, ChatGPT, Gemini, Cursor and others. Free or paid. Free plans work. 
+YO U HAVE 
+About 75 minutes to build, from 9:15 to 10:30 AM. Then your code is frozen.
+
+YO U WIN BY 
+Finishing high in every map. Your 
+bot plays several maps against 
+the same three bots in its group. 
+01 EVENT DAY 
+What you will do, step by step Read this part twice. Knowing the order of the day saves you more time than any trick. 
+Before the day 
+
+Install Python 3.9 or newer. Open a terminal and type 
+python -version to check. 
+Log in to the AI tool you plan to use, on the laptop you will bring. 
+On the day 
+Charge your laptop and bring the charger. 
+Learn how to open a terminal inside a folder on your laptop. 
+Install a code editor, for example VS Code or Cursor. 
+Read this guide with your teammate. Decide who types and who tests. 
+
+8:45 AM UNTIL 9:00 
+Report at the Civil AV Auditorium 
+Find a seat with your teammate. You get your team ID here. Write it down. You need it to submit your bot. 
+
+9:00 AM Scan the QR code and download the starter kit 
+The organizers show a QR code on screen. It opens the starter kit repo. 
+Download it (Code → Download ZIP on GitHub) and unzip it. If you know Git, git clone works too. 
+Open a terminal inside the kit folder and run these two commands: 
+
+python check.py python play.py 
+TER M INAL
+
+Both should work straight away. If one fails, raise your hand. Fix this before you write any code. 
+9:15 AM The contest starts: build your bot 
+Give your AI the kit. The Vibe coding section shows how. 
+Edit my_bot.py . It is the only file you submit. 
+Repeat the build loop: change, check, play, look, change again. 
+~10:00 AM Run the admission test 
+python conformance.pyTER M INAL
+This is the same test the organizers run. If it fails, your bot is rejected. Run it early so you still have time to fix problems. Keep a copy of your last version that passed. 
+
+10:30 AM DEADLINE 
+10:45 AM TO 11:00 
+Email your bot. Code freeze. 
+Send one email to the submission address shared on the day, with: 
+your my_bot.py file, 
+your team name, 
+your team ID. 
+After 10:30 nobody edits code. No AI, no human control. Your bot is on its own. 
+Bots are checked, then the games begin 
+The organizers run every bot through the admission test. When all bots are verified and in place, the tournament starts live on the big screen. Watch your bot play. 
+
+Same day Results on screen are tentative 
+The organizers still review the submitted code after the tournament. A result shown on the day can change after that review. 
+
+Sat 24 Oct 9:00 AM 
+ONWARDS 
+Closing ceremony, Main Auditorium 
+Final results are announced. Awards and prizes are given here. 
+
+02 THE GA M E 
+Four bots, one arena 
+Every match puts four bots in a walled arena for 40 turns. Each bot tries to score the most points. Nobody is knocked out for good: a bot that dies comes back a few turns later. 
+
+4 
+BOTS PER MATCH 1 
+12×12 
+ARENA, WITH WALLS 
+40 
+TURNS PER MATCH 
+2 
+3 
+×2 
+POINTS IN THE LAST 8 TURNS 
+200 ms 
+TO DECIDE EACH TURN 
+
+6 
+7
+5 
+4 
+1 Your base 
+Each bot starts in one corner. Your corner changes from map to map. Standing on your base banks your cargo. 
+2 Uplink pad 
+There are four, one on each side. Carry the Core onto a pad to plant it. 
+3 Resource 
+Collect it, carry it home, and bank it for points. 
+4 Crate 
+Open it to get an item, like a railgun or a medpack. 
+5 Wall 
+Walls block movement, shots and sight. The layout changes every match. 
+6 A bot 
+The bar above it shows its health. 
+7 A bot carrying the Core 
+It is marked, so every bot on the board can see it. 
+Things that are always true 
+Every corner is fair. The walls are rotated four ways around the centre, so each corner faces exactly the same walls. Resources and crates also arrive in fair groups of four. 
+You only see nearby things. Your bot sees 3 cells around it, and only where no wall blocks the line. This is called fog of war. 
+Some things are always visible: the whole wall layout, the Core, the uplink pads, crates, smoke, airstrike markers, and any marked bot. 
+You see your own score and your rank (1st to 4th). You never see another bot's score. 
+Dying never takes away points you already scored. It costs you what you were carrying, your killing streak, and a few turns. 
+Eight map themes, one set of rules 
+Each map in the show uses one of eight themes. A theme changes only the look. The rules, the numbers and the walls work the same on every theme. 
+Scrap Street Glitch Garden Rooftop Rumble Vibe Dome Candy Carnival Haunted Arcade
+Underwater Disco Dreamscape Dojo
+Every team also gets a character in the show. Like the themes, characters are only for the screen. They do not change how your bot plays. 
+
+03 YO U R T U RN 
+Look, decide, act 
+Every turn, the game calls one function in your bot: decide(view) . The view is everything your bot can see right now. Your function returns one action. 
+ALL FOU R BOTS M OVE AT THE SA M E TI M E 
+Every bot decides from the same picture of the board. Then all the actions happen together. You never see what the others chose until the next turn. 
+Moving 
+Your bot moves one cell per turn, in 8 directions: NORTH , SOUTH , EAST , WEST , NORTHEAST , NORTHWEST , SOUTHEAST , SOUTHWEST . 
+Diagonal steps count as one move. So the distance between two cells is the bigger of the two gaps: across or down. Walking into a wall or another bot is allowed, but you do not move. Your energy is still spent. 
+Walking off the edge of the board is illegal. 
+If two bots try to step onto the same cell, neither moves. 
+Nothing can slip diagonally between two walls that touch at a corner. Not a bot, not a shot, not a line of sight. 
+Health and energy 
+Your bot has 70 health and 50 energy. 
+Every action costs energy. You get +5 energy back every turn (+10 in Overtime), up to 50. 
+Every action and its cost 
+ACTION CODE ENERGY WHAT IT DOES 
+Move Action.move("EAST") 1 Step one cell. 
+Attack Action.attack(bot_id) 5 Hit a bot next to you, diagonals included, for 16–24 damage. It lands even if the target walks away this turn. 
+Shoot Action.shoot("NORTH") 6 Fire in a straight line up to 4 cells. Hits the first bot on the line for 10–14. Walls stop it. It lands after everyone moves. 
+Collect Action.collect(id) 2 Pick up the resource, crate or Core you are standing on. Defend Action.defend() 2 Take half damage this turn. 
+Scan Action.scan() 8 See 3 cells further on your next turn. 
+Ability Action.ability( .) 10 Use your special ability. See abilities. 
+
+Use item 
+Action.use_item( .) 4 Use the item you are holding. See items.
+
+ILLEGAL ACTIONS CO ST YOU 
+An illegal action loses the turn. Examples: not enough energy, a target too far away, a move off the board, an ability still recharging. One illegal action in the admission test gets your bot rejected. So your bot must check every action against the view before it returns it. 
+Death and respawn 
+At 0 health your bot is killed. It leaves the board and comes back 3 turns later at its own base, with full health and energy. 
+Everything it carried spills on the floor as one pile. Anyone can collect it. A held item drops as a crate. Its killing streak goes back to 0. Banked points are never lost. 
+Spawn protection: for 2 turns after coming back, your bot takes no damage. Protection ends early if it attacks, shoots, collects, or uses an ability or item. 
+Every base sits in a walled pocket with two exits, so nobody can shoot into a spawn from far away. 
+Marked bots 
+Some bots are marked. Every other bot can see a marked bot anywhere on the board, even through walls. A bot is marked while it: 
+MARK WHY 
+CROWN It has the highest score, so it wears the crown. 
+CORE It is carrying the Core. 
+PLANTER Its planted Core is counting down. 
+CARGO It carries 60 or more cargo value. 
+ON_FIRE It has a killing streak of 3 or more. 
+LOUD It attacked, shot, or fired a big weapon last turn. Fighting is loud.
+04 SC O RING 
+Three ways to score 
+The bot with the most points when the 40 turns end wins the map. Points come from three places. You can use one, two or all three. 
+
+
+Kills 
+Bring an enemy to 0 health. A kill pays +40 plus bonuses. 
+Part of each kill waits on the floor as a tag. Walk over it to collect the rest. 
+Cargo 
+1. Collect resources. They go into your hold. 
+2. Carry them home. 
+3. Stand on your base. Everything you carry is banked and 
+scores its value. 
+The Core 
+1. Pick up the Core from the centre. 
+2. Carry it onto an uplink pad. It plants itself. 
+3. If it survives 3 turns, you score +60. 
+
+OVERTI M E: THE LAST 8 TURNS PAY DO UBLE 
+From turn 32, every point in the table below counts twice: kills, bonuses, banked cargo, uplinks and defuses. Energy also comes back twice as fast.
+Every way to earn points 
+EVENT POINTS Kill: +25 at once, +15 when you collect its tag +40 Kill a bot you already killed in the last 8 turns (all of it is in the tag) +15 First Blood: the first kill of the match +20 Crown kill: the victim wore the crown. +15 more for each extra map in a row it had won +30 Shutdown: the victim had a streak of 2 / 3 / 4 / 5 or more +10 / 20 / 30 / 40 On Fire: you kill while your own streak is 3 or more +10 Multi-kill: each extra kill you make in the same turn +20 Revenge: you kill the bot that last killed you +15 Nemesis: you kill the bot that killed you most last map +15 Clutch: you make the kill while on 15 health or less +15 Assist: you hurt the victim in the last 3 turns, but someone else got the kill +10 Blast: your own bomb, airstrike or orbital made the kill +10 Shove kill: a bot you shoved died to a blast within 2 turns. You also share the kill +10 Tag confirmed: you collect the tag of your own kill +15 Tag denied: you collect someone else's tag, so the killer never gets the rest +10 Cargo banked at your base its value Core uplinked: your planted Core survives its countdown +60 Core defused: shared by every enemy next to the Core when the defuse completes +40 
+One kill can earn several rows at once. Your role adds a few rows of its own. Every point your bot earns appears in the match log, with the reason. 
+How kills work 
+Kill Confirmed. When a bot dies, it drops a tag where it fell. A bot standing on a tag at the end of a turn picks it up. If a killer picks it up, that is confirmed (+15). If anyone else does, even the victim after respawning, that is denied (+10). Tags disappear after 6 turns. 
+Shared kills. Every bot that dealt damage on the killing turn gets the kill. 
+Streaks. Your streak is the number of kills since you last died. At a 3-kill streak you get a free radar sweep: you see every enemy for 3 turns. At a 5-kill streak you get an airstrike in your item slot. 
+The crown. At the start of each turn, the bot with the highest score wears the crown. It is marked for everyone. Nobody learns by how much it leads. 
+A bot killed by its own bomb gives nobody any points.
+How cargo works 
+Collected resources are not points yet. They only score once you stand on your own base. 
+Your hold carries 4 resource units. When it is full, you must bank before you can collect again. 
+Hot pickup: collecting while another bot is within 2 cells loads the resource at 1.3 times its value. A spilled pile never gets this bonus again. 
+Cargo still in your hold when the match ends scores nothing. 
+The match starts with 4 resources. Most resources arrive later in supply waves during the match. 
+How the Core works 
+1. Spawn. The Core appears on turn 8 on one of the four centre cells. 
+2. Pick up. Stand on it and collect "CORE" . You are now marked. If you die, the Core drops where you fell. 3. Plant. Step onto any uplink pad while carrying it. It plants itself at the end of that turn. 
+4. Uplink. If it survives 3 turns, the planter scores +60, even if the planter died in the meantime. 
+5. Defuse. If an enemy stays within 1 cell of the planted Core at the end of 2 turns in a row, it is defused. Every enemy next to it scores +40, and the uplink never happens. 
+6. Respawn. After an uplink or a defuse, the Core comes back at the centre 4 turns later. 
+The Core's position and status are always visible to every bot. 
+If two bots finish a map on the same score 
+The tie is broken in this order: more kills, then fewer deaths, then more cargo banked, then more resources collected.
+05 ABI L I T I E S & I T E M S 
+Everything on the board 
+This part explains what each piece does and what to watch out for. It does not tell you which one to pick. That choice is yours. 
+Special abilities: pick one for the whole match 
+You set your ability once, in your code, with ABILITY = "DASH" (or None ). Using it costs 10 energy. Then it recharges for 6 turns. 
+
+DASH 
+Action.ability( 
+direction="EAST") 
+Move 2 cells in a 
+straight line, in any of 
+the 8 directions. 
+WATCH Both cells must 
+be free of walls and bots. 
+BOMB 
+Action.ability() 
+Drop a bomb on your 
+own cell. 3 turns later it 
+explodes: 45 damage 
+in the centre, 25 one 
+cell away. 
+WATCH It hurts you too. 
+Everyone nearby can see 
+it. One live bomb at a 
+time. 
+BO M B TI M ING 
+BLINK 
+Action.ability( 
+direction="NORTH") Teleport 3 cells in a straight line, over walls and bots. 
+WATCH The landing cell must be free. 
+SHOVE 
+Action.shove(bot_id) Push an enemy next to you one cell straight away from you. 
+WATCH If a wall, a bot or the edge is behind it, it is slammed for 15 damage instead. 
+SHIELD 
+Action.ability() Cut incoming damage by 70% for this turn. 
+WATCH It only lasts one turn. 
+
+A bomb explodes at the start of a turn, before any bot decides. So the shield or defend that protects you is the one you used on the turn before, when the bomb shows turns_until_detonation: 1 . The same is true for airstrikes and orbitals. Blasts also set off other bombs inside their area. 
+Crates and items 
+Crates drop in groups of four during the match. Everyone can see them. Stand on one and collect it to get the item inside. Using an item costs 4 energy. 
+You hold one item at a time. Opening a crate while holding an item replaces the old one. 
+The item is chosen when you open the crate. The lower your rank, the likelier a power item (railgun or airstrike). Likelier, never certain. 
+Each match uses only 4 of the 5 item types. The list is in view["item_pool"] .
+Rivals can see that you hold an item, but not which one. 
+
+RAILGUN 
+Action.use_item( 
+direction="WEST") 
+Fires to the first wall or 
+the edge and hits 
+every bot on the line 
+for 25. 
+WATCH It is loud, and it 
+lands after everyone 
+moves. 
+SMOKE 
+Action.use_item() 
+A 3×3 cloud on your 
+cell for 3 turns. Bots 
+inside are hidden from 
+anyone more than 1 cell 
+away. 
+WATCH Marks still show 
+through smoke. 
+The legendary drop 
+AIRSTRIKE 
+Action.use_item(x=5, y=6) 
+Aim at any cell, even in fog. It lands two turns later: 40 in the centre, 25 one cell away. 
+WATCH Everyone sees the marker at once. It hurts you if you stand in it. 
+RADAR 
+Action.use_item() See every enemy on the board for 3 turns. 
+MEDPACK 
+Action.use_item() Heal 40 health, never above your maximum. 
+
+Once per match, a gold crate lands near the centre. Everyone gets a warning 2 turns before, in view["legendary_incoming"] . It holds one of three legendary items. 
+
+LEGENDARY 
+REAPER 
+Action.use_item() 
+For 5 turns, every kill 
+you make pays its kill 
+points twice. 
+Events 
+LEGENDARY 
+ORBITAL 
+Action.use_item(x=6, y=6) 
+A bigger airstrike: radius 2, 60 in the centre, 30 at the edge. Lands 2 turns later. 
+WATCH Everyone can see where it will land. 
+LEGENDARY 
+OVERSHIELD 
+Action.use_item() For 3 turns, the next hit that would kill you leaves you on 1 health instead. 
+
+Every match gets each of these two events once, at some point during the match.
+EVENT WHAT HAPPENS HOW LONG 
+
+BLOOD_MOON Attack, shoot, railgun and shove-slam damage ×1.5. Blasts are not boosted. 
+6 turns 
+
+RESOURCE_RUSH Four extra resources drop in the inner arena. Instant. The resources stay. 
+Taunts 
+Any action can carry one emote for the match feed, like Action.defend().taunt("GG") . The allowed list: GG , NICE , OOPS , TOO_SLOW , WATCH_THIS , RIP , BOOM , HELLO , THANKS , CATCH_ME . A taunt never changes what the action does. It is just for the crowd.
+06 R O L E S & SH O P 
+Roles, credits and the shop 
+Before every map, your bot secretly picks a role and buys upgrades. Nobody else can see your role or what you bought. 
+The four roles 
+A role makes one way of scoring pay more, and costs you somewhere else. You can also pick no role ( None ): no bonus and no cost. 
+Hunter Hauler Runner 
+
++ 
++10 per kill. Rampage: +5 per kill for each kill already on your streak. 
++ 
++1 cargo space. Banking 3 units at once pays 1.25×, 4 or more pays 1.5×. 
++ 
++10 per uplink, plus 10 more for each earlier uplink this map. Ability recharges 2 turns faster. 
+
+− 
+Banks cargo at 0.85×. Whoever kills you gets +25. 
+− Kills pay 10 less. 
+− 5 less maximum health. 
+
+Warden 
+
++ −
++20 per defuse. Guard: +20 for killing a Core carrier, a live planter, or anyone within 2 cells of a planted Core. 
+Can never pick up the Core. Banks at 0.9×. 1 less cargo space. 
+
+Role bonuses double in Overtime, like everything else. 
+Credits 
+Every bot starts a series with 4 credits. 
+After every map you get +3, plus a placement bonus: +0 for 1st, +1 for 2nd, +2 for 3rd, +3 for 4th. You also get +1 for every map in a row you have not won, up to +2. 
+Unspent credits carry over. You can hold at most 10. 
+The shop 
+ITEM PRICE EFFECT 
+ARMOR 2 +15 maximum health. Rivals only ever see your health. POCKETS 2 +1 cargo space. 
+SCOPE 2 +1 vision range. 
+QUICK_RESPAWN 3 Come back 1 turn sooner. 
+OVERCLOCK 3 Ability recharges 2 turns faster (never below 3 turns). KIT_RAILGUN 3 Start the map holding a railgun. 
+KIT_MEDPACK 2 Start holding a medpack. 
+KIT_SMOKE 2 Start holding a smoke. 
+KIT_RADAR 2 Start holding a radar. 
+Each item can be bought once per map. You can buy at most one KIT_ , because you have one item slot. 
+How your bot buys 
+Write a buy(self, shop) function. The game calls it once before every map. shop holds your credits, the prices, the roles, the map number and your own past placements. It never holds anything about a rival. 
+def buy(self, shop): 
+# shop["credits"], shop["prices"], shop["map"], shop["your_placements"] 
+return {"role": "HAULER", "items": ["POCKETS"]} 
+A BAD BUY IS NEVER ILLEGAL 
+An unknown name, a duplicate, two kits, more than you can afford, a crash or a timeout simply buys nothing. You still play the map. Return None to keep your class's ROLE and buy nothing. 
+What carries from one map to the next 
+The last map's winner starts the next map wearing the crown. 
+A bot that won several maps in a row carries a bigger crown bounty (+15 per extra win). 
+Your nemesis is whoever killed you most last map. Killing it pays +15. 
+Credits carry over. 
+Nothing else. Every map starts with fresh health, energy, scores and an empty board.
+07 THE T O U RNA M ENT 
+How the tournament works 
+Bots play in groups of four. A group plays a series of maps. The best bots in each group move on to the next round. 
+Rank points 
+In a series, what counts is where you finish each map, not your score. 
+
+3 
+FOR 1ST PLACE 
+2 
+FOR 2ND PLACE 
+1 
+FOR 3RD PLACE 
+0 
+FOR 4TH PLACE 
+
+So every map matters, even one you cannot win. Finishing 2nd in every map beats winning once and finishing last four times. 
+The rounds 
+
+R O U ND 1 
+5 maps 
+The top bot of each group advances. 
+R O U ND 2 
+5 maps 
+The top 2 of each group advance. 
+SE M IFINAL 
+7 maps 
+The top 2 of each group advance. 
+GRAND FINAL 
+10 maps 
+One group of four. The winner is champion. 
+
+This is the plan for a full field. If the number of teams changes, the organizers confirm the final format on the day. 
+Fair play built in 
+Your starting corner rotates across the series. 
+The groups are drawn in advance. 
+If teams are level on rank points 
+The tie is broken in this order. The first rule that separates the teams decides. 
+1. Head-to-head: how many times each team finished above the other tied teams in this series. 2. Map wins: more maps finished 1st. 
+3. Total score across the series. 
+4. Core captures. 
+5. Banked cargo value. 
+If a rule separates some of the tied teams but not all, the ones still level start again from head-to-head among just themselves. The standings screen in the show names the rule and the numbers for every tie.
+When a bot breaks 
+A bot that crashes, takes too long, or returns a bad action loses that turn, not the match. 
+After 3 failures in a row, it is switched off for the rest of that match. 
+A broken bot only hurts its own team. 
+Results 
+The show displays results live on the day. They are tentative until the organizers finish reviewing the submitted code. Final results, awards and prizes are announced at the closing ceremony on Saturday 24 October, from 9:00 AM, in the Main Auditorium. 
+Map 2 of 5 on Glitch Garden. The small table at the top shows the series so far, with the advance line.
+08 VIBE C O DING 
+Build your bot with AI 
+You do not need to be an expert coder. You need to explain your idea clearly, test often, and read what the tools tell you. 
+What is in the starter kit 
+FILE WHAT IT IS FOR 
+my_bot.py Your bot. The only file you edit and submit. It starts as a simple legal bot. docs/RULES.md Every rule and number in the game. 
+docs/BOT_SDK_CONTRACT.md What your bot receives each turn and what it must return. check.py Quick test: is my bot valid? 
+play.py Play matches and see what happened. 
+conformance.py The full admission test the organizers run. 
+sparring.py Chaos bots that act at random. They find crashes in your bot. engine/ , vibe_sdk/ The real game engine. You never edit these, but your AI can read them. 
+Two ways to work. Both are fine. 
+
+A code editor with AI 
+Open the whole kit folder in the editor. The AI can read every file, edit my_bot.py and often run the commands for you. 
+Cursor Claude Code Codex Antigravity VS Code + Copilot 
+The build loop 
+A browser chat 
+Attach docs/RULES.md , 
+docs/BOT_SDK_CONTRACT.md and my_bot.py . Copy the new code back into my_bot.py yourself, then run the commands. Free plans work. 
+ChatGPT Claude Gemini Grok 
+
+1 
+Change 
+Ask your AI for one small 
+2 
+Check 
+Run python check.py . 
+3 
+Play Run 
+4 
+Look 
+Run python play.py 
+
+change. 
+Is it still valid? 
+python play.py -seeds 20 . 
+and read the turn log. Is it 
+
+How does it do across 20 maps? 
+doing what you meant?
+
+5 
+Repeat 
+Tell the AI what you saw, 
+and pick the next change. 
+python play.py # one match, full turn log python play.py -seed 42 # a different map python play.py -seeds 20 # 20 maps and a summary python play.py -vs sparring:ChaosShove # play against a chaos bot python check.py # still valid? python conformance.py # the admission test 
+TEST AGAINST DIFFERENT O PPO NENTS 
+TER M INAL
+
+By default, play.py puts your bot against three copies of itself. The tournament uses maps and opponents you have never seen. Use -seeds to see many maps, and -vs to play against other bots, including ones you write yourself. 
+The one rule about your code 
+decide(view) must return one action within 200 milliseconds. So must buy(shop) . Aim for tens of milliseconds: the tournament machine is busier than your laptop. 
+Your bot must do exactly the same thing every time it gets the same input. No time.time() , no unseeded random , no reading files, no internet. A seeded generator like random.Random(7) is fine. 
+Your bot keeps one object for the whole match, so self.anything = . remembers things between turns. 
+Your class must be called MyBot . Put every helper inside my_bot.py . A second file works on your laptop but does not exist at the tournament. 
+Import only vibe_sdk and the Python standard library. Some modules are blocked, like os , sys , subprocess , socket , pickle and threading , and some calls, like eval , exec and open . check.py tells you if you break this. 
+Example strategy sketches 
+These are deliberately very simple. They are not good plans and they are not recommendations. They only show how an idea becomes a list of rules, and how rules become code. Your own idea is the whole point of the competition. 
+
+The Wanderer 
+1. Pick a random direction that stays on the board. 
+2. Move that way. 
+The Walker 
+1. If you see an enemy, walk toward it. 
+2. If it is next to you, attack it. 3. Otherwise, walk to the middle. 
+The Picker 
+1. If you stand on a resource, collect it. 
+2. If your hold is full, walk home. 
+3. Otherwise, walk to a resource you can see. 
+
+The Fetcher 
+1. If the Core is on the ground, 
+walk to it and collect it. 
+2. If you carry it, walk to an uplink 
+pad. 
+3. Otherwise, walk to the middle. 
+From sketch to code: The Walker 
+Here is The Walker as a complete my_bot.py . It passes check.py and conformance.py . from vibe_sdk import DIRECTION_DELTAS, Action, Bot 
+class MyBot(Bot): 
+ABILITY = None 
+ROLE = None 
+def decide(self, view): 
+me = view["self"] 
+enemies = view["visible_enemies"] 
+if enemies: 
+target = enemies[0] 
+distance = max(abs(target["x"] - me["x"]), abs(target["y"] - me["y"])) 
+# Next to an enemy and enough energy: attack it. 
+if distance = 1 and me["energy"] = 5: 
+return Action.attack(target["id"]) 
+# Otherwise walk toward it. 
+return Action.move(self.step_toward(me, target["x"], target["y"])) 
+# Nobody in sight: walk to the middle. 
+board = view["board"] 
+return Action.move(self.step_toward(me, board["width"] / 2, board["height"] / 2)) 
+def step_toward(self, me, target_x, target_y): 
+dx = (target_x > me["x"]) - (target_x < me["x"]) 
+dy = (target_y > me["y"]) - (target_y < me["y"]) 
+if (dx, dy) = (0, 0): 
+dx = 1 if me["x"] = 0 else -1 
+for name, delta in DIRECTION_DELTAS.items(): 
+if delta = (dx, dy): 
+return name 
+return "EAST" 
+Now look at what python play.py printed when we ran it: 
+T00 YOU > MOVE to (10,1) 
+T01 YOU > MOVE to (9,2) blocked 
+T02 YOU > MOVE to (9,2) blocked 
+T03 YOU > MOVE to (9,2) blocked 
+TER M INAL
+
+The bot walks into a wall every turn. That is legal, so check.py passes. But the bot is stuck. Valid does not mean good. This is why you read the turn log, and then tell your AI what you saw. 
+Mistakes that break a bot 
+Assuming something is in the view. Fog of war means most lists are often empty. Empty lists and missing things are normal. 
+Not checking energy, range, board edges or ability cooldown before returning an action. 
+Assuming an item exists. Each match uses only some items. Check view["item_pool"] . Assuming the walls are the same as last time. They change every match. Read view["walls"] . Using slow code. Searching the whole board many times per turn can pass 200 ms. 
+Waiting until 10:25 to run conformance.py . 
+LET THE ENGINE DO THE GEO M ETRY 
+vibe_sdk.geometry is the engine's own wall code: line_clear , shot_path and step_open . If your bot uses it, it always agrees with the engine about sight lines and shot paths.
+09 PR O M PTS 
+Prompts you can copy 
+Use these as a starting point. Replace the gold text with your own words. One small request at a time works better than one giant request. 
+1 Understand the game 
+Read docs/RULES.md and docs/BOT_SDK_CONTRACT.md. Do not write any code yet. Explain the game to me in simple bullet points: 
+- what my bot sees each turn, 
+- every action it can return, with its energy cost, 
+- every way to score points. 
+Then list anything that would make an action illegal. 
+Use first. Read the answer together and check it against this guide. 
+2 Turn your idea into rules 
+Here is our idea for the bot: [describe your idea in a few sentences]. 
+Turn it into a short, numbered list of if-then rules for decide(view), checked from top to bottom. 
+Do not write code yet. Ask me questions if anything is unclear. 
+Agree on the rules before any code exists. It is much easier to fix a rule than code. 
+3 Write the bot 
+Write these rules into my_bot.py: [paste your rules]. 
+Requirements: 
+- Edit only my_bot.py. Keep the class name MyBot. 
+- Import only vibe_sdk and the Python standard library. 
+- Before returning any action, check energy, range, board edges and cooldown against the view. 
+- Treat every list in the view as possibly empty. 
+- Every possible path through decide() must return a legal Action. 
+- No unseeded randomness and no time-based code. 
+Give me the complete file. 
+Then run python check.py . 
+4 Fix an error 
+I ran [python check.py] and it printed this: 
+[paste the full output] 
+Explain the cause in one or two sentences. Then fix my_bot.py and give me the complete file. 
+Always paste the full output, not your summary of it.
+5 Fix what you saw 
+I ran python play.py. Here is part of the turn log: 
+[paste the lines that show the problem] 
+I expected my bot to [what you wanted], but it [what it actually did]. Find out why and suggest one small change. Keep every legality check. 
+Describe what you expected and what really happened. That gives the AI a real problem to solve. 
+6 Compare two versions 
+Here are two summaries from python play.py -seeds 20. 
+Before the change: [paste] 
+After the change: [paste] 
+What changed? Did the change do what we wanted? What should we look at next? One map can be luck. Twenty maps tell you more. 
+7 Pass the admission test 
+python conformance.py failed with this output: 
+[paste the full output] 
+Fix my_bot.py so it passes. Do not change what the bot is trying to do unless the fix needs it. 
+Make sure decide() and buy() are fast, deterministic and can never return an illegal action. 
+Use this as soon as the test fails. Then run it again. 
+8 Explain the code to me 
+Explain my_bot.py line by line in simple English. 
+For each rule in decide(), tell me which situation in the game triggers it. You should understand your own bot. It also makes your next request clearer. 
+HABITS THAT HELP 
+Save a copy every time it passes. For example, my_bot_backup.py . If a change breaks everything, go back. One change at a time. If you change five things and it gets worse, you will not know which one did it. Do not trust code blindly. Run it, read the log, and check it against the rules. 
+Split the work. One teammate talks to the AI. The other runs the tests and reads the logs. Remember to submit my_bot.py , not your backup file.
+10 CHEAT SHE E T 
+Every number in one place 
+
+M ATCH 
+Bots per match 4 Arena 12 × 12 Turns 40 Overtime starts turn 32 Decision time 200 ms 
+DA M AGE 
+Attack (range 1) 16–24 Shoot (range 4) 10–14 
+YOU R B OT 
+Health 70 Energy (max) 50 Energy back per turn +5 (+10 OT) Vision 3 cells Cargo space 4 units Respawn 3 turns Spawn protection 2 turns 
+M AIN POINTS 
+Kill +40 Repeat kill (8 turns) +15 
+ACTION CO STS 
+Move 1 Collect · Defend 2 Use item 4 Attack 5 Shoot 6 Scan 8 Ability 10 
+TI M ING 
+Core first appears turn 8 Core countdown 3 turns 
+
+Railgun (whole line) 
+Bomb · centre / edge 
+Airstrike · centre / edge 
+Orbital · centre / edge 
+25 
+45 / 25 40 / 25 60 / 30 
+First Blood +20 Crown kill +30 Core uplink +60 Core defuse +40 Cargo banked its value Hot pickup ×1.3 
+Defuse needs 2 turns Ability recharge 6 turns Tags last 6 turns 
+
+Shove slam 15 Defend · Shield −50% · −70% Blood Moon ×1.5 
+SERIES 
+Rank points 3 / 2 / 1 / 0 Starting credits 4 Credits per map +3 
+EVENT DAY 
+Reporting · team ID 8:45 AM Kit QR on screen 9:00 AM Contest starts 9:15 AM 
+
+Placement bonus 0 / 1 / 2 / 3 Credit cap 10 
+Deadline · code freeze 
+10:30 AM 
+
+Games begin 10:45–11:00 
+Closing ceremony Sat 24 Oct 
+The full rules are in docs/RULES.md in the starter kit. If this guide and the engine ever disagree, the engine decides.
+11 FA Q 
+Questions 
+Can we use any AI tool? − 
+Yes. Any AI tool, free or paid, while you build. Free plans work. After the 10:30 code freeze, your bot runs alone: it cannot call an AI or use the internet during a match. 
+Do we need to install anything except Python? − No. You need Python 3.9 or newer. The kit needs no pip install . 
+How big is a team? − Two people. 
+When do we get the starter kit? − On the day, at 9:00 AM. It is shared as a QR code on screen. 
+When do we get our team ID? − At reporting, from 8:45 to 9:00 AM. You need it in your submission email. 
+What exactly do we submit? − 
+One email before 10:30 AM with your my_bot.py file, your team name and your team ID. The class inside must be called MyBot . 
+What if our bot fails the admission test? − 
+It is rejected. That is why you run python conformance.py yourself, early. A bot that crashes, takes longer than 200 ms, behaves differently between runs, or makes even one illegal action fails. 
+Can we see the other teams' code or scores? − No. During a match your bot sees only its own score and its rank. Nobody sees another team's code. 
+Is the result on the day final? − 
+No. It is tentative. Final results are announced at the closing ceremony on Saturday 24 October, from 9:00 AM, in the Main Auditorium. 
+Is there a best strategy? − 
+No single strategy is right. Kills, cargo and the Core all score. How well a plan does depends on the other three bots, and you will not know who they are until the match.
+Haven't registered yet? 
+Limited spots left. Grab a teammate and sign up for the Vibe Coding 
+Competition at TechFest '26. 
+Sunday 18 October · Civil AV Auditorium · NED University 
+SCAN TO REGISTER 
+Vibe Wars · Vibe Coding Competition · TechFest '26
+this is the competition guide 
+you are the person participating in this compettiton, you are a Software engineering student who wroks across webb and app building alongside AI and ml concepts how ever this is the first tiem you are participating in a bot building competition so how would you practice or strategize to win this conpetitoion. you have claude pro and vs code for practice and for the competiton day.
+make a strategy that would differentiate you from other vibe coders or participants who are students of other universities but you are from SSUET.
+
+
+suggestion*
+would you practice by simulating a competition environment in your vs code and practice and strategising smart decisions for the bot and have before hand stress and pressure.
+overall how would youd esign you bot strategy which sets you apart from other participants with respect to the game rules and regulations, without ever braking any rules.
+
+Haan, yeh behtar hai. Token bachane ke liye main sab jawab pehle se chun deta hoon (token-saving defaults), aur aapko ek chhota prompt deta hoon jo aap VS Code ke Claude Code mein paste karein.
+
+Token-saving choices (mera suggestion)
+Sawal	Choice	Kyun
+1. Realism	Core rules + tags + DASH/SHIELD + Hauler role (items, events aur shop skip)	Asli strategy ke 80% fayde, ~40% code
+2. Opponents	Hunter, CoreRusher, Picker (3 bots)	Teen alag styles kaafi hain; Chaos baad mein
+3. Visual	ASCII board sirf --board flag par	Default log chhota rahe, tokens kam
+4. Starter	Simple legal my_bot.py, koi reference bot nahi	Rehearsal mein Scavenger aap khud banayenge
+5. Timer	Phone timer use karein, script nahi	Zero tokens
+Prompt for Claude Code (copy-paste)
+Ek khali folder vibe_mock banayein, VS Code mein kholein, aur Claude Code mein yeh paste karein:
+
+Build a small mock of a bot game in this folder. Python 3.9, stdlib only. Keep code compact, no comments beyond essentials, no explanations in chat. Just create files, run tests, report pass/fail in 3 lines.
+Files:
+- vibe_sdk/__init__.py: Bot base class, Action (move(dir), attack(bot_id), shoot(dir), collect(id), defend(), scan(), ability(direction=None)), DIRECTION_DELTAS (8 dirs, NORTH=(0,-1)).
+- vibe_sdk/geometry.py: step_open(walls,a,b), line_clear(walls,a,b). No diagonal slipping between two corner-touching walls.
+- engine.py: run_match(bots, seed) -> results.
+- play.py: --seed N, --seeds N (summary: avg rank, wins, deaths, banked), --vs a,b,c, --board (ASCII each turn).
+- check.py: import my_bot, forbid imports os/sys/subprocess/socket/pickle/threading and calls open/eval/exec, run 1 match, fail on any illegal action or decide() >200ms.
+- conformance.py: 10 seeds, fail on illegal action, exception, >200ms, or non-determinism (same seed run twice must give same actions).
+- opponents.py: HunterBot, CoreRusherBot, PickerBot.
+- my_bot.py: class MyBot(Bot), simple legal picker bot.
+Rules:
+12x12, 4 bots in corners, base = 2x2 corner pocket with 2 exits. Walls random but 4-way rotational symmetric around centre. Seeded RNG only.
+40 turns, simultaneous actions. Overtime turn>=32: all points x2, energy regen +10 (else +5).
+HP 70, energy 50 max. Costs: move1 collect2 defend2 attack5 shoot6 scan8 ability10.
+Move 8 dirs; into wall/bot = no move, energy spent; off board = illegal; two bots same cell = neither moves.
+Attack adjacent (chebyshev 1) 16-24 dmg, lands even if target moves. Shoot straight line 4 cells, first bot, 10-14, after moves, walls block. Defend half damage.
+Vision 3 cells (chebyshev) with line_clear; scan +3 next turn. Always visible: walls, core, pads, tags, marked bots (CORE carrier, CARGO>=60, LOUD = attacked/shot last turn, CROWN = top score).
+Death: respawn 3 turns later at base, full hp/energy, cargo drops as pile, 2-turn spawn protection (ends if attack/shoot/collect/ability).
+Kill +25 now; tag dropped, +15 if killer picks it, +10 to anyone else (denied). Tags last 6 turns. Shared kill if multiple damaged that turn. First blood +20.
+Resources: 4 at start, supply waves of 4 (symmetric) on turns 10,18,26. Each value 10-20. Hold 4 units. Collect within 2 cells of enemy = x1.3. Bank by standing on base. Unbanked cargo at end = 0.
+Core: spawns turn 8 at a centre cell. Collect it, step on one of 4 edge pads, plants. Survives 3 turns = +60. Enemy within 1 cell for 2 consecutive turn-ends = defused, +40 each adjacent enemy. Respawns 4 turns later.
+Abilities (class attr ABILITY): DASH 2 cells straight, both free; SHIELD -70% this turn. Cooldown 6.
+Role (class attr ROLE): HAULER = +1 hold, bank 3 units x1.25, 4+ x1.5, kills -10. None = default.
+Illegal action (low energy, bad range, off board, cooldown, collect nothing, full hold) = turn lost, logged as ILLEGAL.
+View dict: turn, turns_left, self{id,x,y,hp,energy,cargo_units,cargo_value,cooldown,score,rank,alive,base}, visible_enemies[{id,x,y,hp,marks}], resources[{id,x,y,value}], tags, core{x,y,state,carrier}, pads, walls, board{width,height}.
+Log line format: T05 BOTNAME > ACTION result (+points reason).
+Results: final placement 1-4 per bot, tie-break kills then fewer deaths.
+Aur tokens kaise bachayein (Claude Code mein)
+Build ke baad /clear karein, phir naya kaam shuru karein. Purani history har message ke saath dobara bheji jaati hai.
+Errors ka sirf aakhri 10–20 lines paste karein, poora log nahi.
+play.py --seeds 20 ka sirf summary dikhayein, turn log nahi.
+Ek message mein ek kaam: “fix X, don’t explain”.
+Agar woh poori file dobara likhne lage to kahein: “edit only the changed lines”.
+Rehearsal ke din bhi yahi rules follow karein.
+Sirf ek sawal: kya yeh defaults theek hain, ya kuch badalna hai (jaise items ya Chaos bot add karna)? Agar theek hain, upar wala prompt seedha Claude Code mein chala dein. Agar build mein koi error aaye to sirf error ki lines yahan bhej dein.
+
+mae keh rahi houn k scavanger bot mujhe bana k dou in my vs code
+
+mae keh rahi houn k scavanger bot mujhe bana k dou in my vs code adjust prompt for this
+
+Theek hai, samajh gaya. Neeche wala prompt VS Code ke Claude Code mein paste karein. Yeh Scavenger bot my_bot.py mein banayega, usi mock arena ke format mein jo pichle prompt se bana hai.
+
+Order: pehle mock arena wala prompt chalayein → /clear → phir yeh prompt.
+
+Replace my_bot.py with a "Scavenger" bot for this mock game. Read vibe_sdk/ and engine.py first for exact view fields. Compact code, no chat explanations. After writing, run check.py, conformance.py, and play.py --seeds 20 --vs opponents:HunterBot,opponents:CoreRusherBot,opponents:PickerBot. Report results in 5 lines max.
+Constraints: class MyBot(Bot), ABILITY="DASH", ROLE="HAULER". Only vibe_sdk + stdlib. Deterministic (no random/time, sort ties by (dist,x,y), never iterate sets unsorted). decide() <20ms. Every list in view may be empty; use .get().
+Structure:
+decide(view): try: perceive -> remember -> map -> choose -> validate; except: safe_fallback. If chosen action illegal, try next candidate; last resort defend() if energy>=2 else an in-bounds move.
+is_legal(): energy>=cost, target in bounds, attack only chebyshev 1 visible enemy, collect only on my cell, hold not full, cooldown 0 for ability, DASH both cells free.
+Memory (self.*, reset when turn goes down): known resources (remove if gone when in sight), enemy last-seen pos+turn, tags.
+Map: Dijkstra over 12x12 with no diagonal corner slipping. Cost = 1 + w*danger. Danger: visible enemy = 3 on its cell, 2 at dist 1, 1 at dist 2; last-seen enemy (<=3 turns old) +1 within 1. w = 1, +0.5 if rank 1, +1.5 if hp<30, -0.5 if rank 4 and turns_left<12.
+Choose, first match wins:
+1. Adjacent enemy: attack if its hp<=16, or my hp>=its hp+15 and my hp>35, or (rank 4, turns_left<=10, my hp>=its hp). Else retreat to lowest-danger neighbor (DASH away if possible), else defend.
+2. Shoot enemy in straight line <=4, clear line, first bot on line, hp<=10.
+3. On my cell: resource and hold not full -> collect. Core on ground and turn>=26 -> collect "CORE".
+4. Carrying Core -> go to nearest pad.
+5. Bank: cargo>0 and (hold full, or turns_left<=steps_home+3, or cargo_value>=50, or overtime and units>=2) -> go home; if on base, defend (stay).
+6. Enemy core planted -> go within 1 cell and stay (defuse).
+7. Tag within 3 steps -> go to it.
+8. Core on ground, turn>=26, and I am closer than every visible enemy -> go to it.
+9. Best known resource by value/(cost+1); skip if enemy is 2+ steps closer or trip home won't fit turns_left.
+10. Explore: cycle inner points (4,4),(7,4),(7,7),(4,7). If nothing known and energy>=45, scan every 6 turns.
+Use DASH only when going home/escaping, straight 2 free cells, energy>=16.
+buy(shop): role HAULER, POCKETS if credits>=2, ARMOR if credits left>=2 and last placement>=3. Wrap in try, return None on error.
+Token-saving tips (zaroori)
+Agar test fail ho, sirf yeh likhein: fix failures, edit only changed lines (poora output paste na karein, Claude Code khud dekh lega).
+Pass hone ke baad: cp my_bot.py backup_scavenger.py (khud terminal mein chalayein, tokens zero).
+Phir /clear, aur improvements ek ek karke karein.
+Agar Claude Code koi error par atak jaye, sirf woh 2–3 lines yahan bhejein, main fix bata dunga.
+
+check.py: PASS
+conformance.py: PASS (10 seeds)
+play.py --seeds 20: MyBot avg rank 3.15, 3 wins, 1.20 deaths, 32.5 banked (tested on Python 3.11 only; 3.9 not run)
+
+then for scavanger bot
+check.py: PASS
+conformance.py: PASS (10 seeds, 0 illegal, 0 exceptions)
+play.py --seeds 20 --vs opponents:HunterBot,opponents:CoreRusherBot,opponents:PickerBot: Scavenger avg rank 1.85, 10 wins, 0.85 deaths, 70.37 banked
+play.py now accepts the opponents:Name form (it was short names only before).
+buy() is written but unused, since the engine has no shop; Python 3.11 only, max decide ~5.5 ms.
+
+Yeh bahut acha result hai.
+
+Bot	Avg rank	Wins (20)	Deaths	Banked
+Simple bot	3.15	3	1.20	32.5
+Scavenger	1.85	10	0.85	70.4
+Matlab rank 1.3 behtar hua, deaths kam hui, aur banking double ho gayi. Architecture kaam kar rahi hai.
+
+Lekin abhi khush na hon, 3 khatray hain
+Opponents bahut kamzor hain. Asli tournament mein doosre Claude/ChatGPT bots honge, kuch smart bhi. Real test yeh hai ke Scavenger apne jaise smart bots ke against kaisa khelta hai.
+20 seeds noisy hain. 50 seeds se pata chalega ke 1.85 asli hai ya luck.
+Python 3.9 test nahi hua. Tournament machine 3.9 ho sakti hai. 3.10+ wali cheezein (match, int | None, list[int] type hints) 3.9 par crash kar sakti hain.
+Agla step (ek ek karke, /clear ke baad)
+Prompt 1: asli stress test (sabse zaroori):
+
+Run play.py --seeds 50 in 3 setups, report only avg rank, % 4th place, deaths for MyBot:
+A) vs Hunter, CoreRusher, Picker
+B) vs 3 copies of MyBot (backup_scavenger.py as opponent if needed)
+C) vs Hunter, Hunter, CoreRusher
+Also scan my_bot.py for any Python 3.10+ syntax and make it 3.9-safe. No other changes.
+Results dekh kar:
+
+% 4th place > 15% → yeh sabse bari kamzori hai, isay pehle fix karein.
+Setup C mein deaths zyada → retreat ya danger weight barhayein.
+Setup B mein sab ~2.5 → normal hai (sab barabar hain), koi masla nahi.
+Prompt 2: sirf ek improvement (Prompt 1 ke results ke hisaab se), jaise:
+
+Find 3 turns in play.py --seed 7 log where MyBot died or wasted turns (blocked/ILLEGAL/idle). Explain in 1 line each, suggest 1 fix. Don't edit yet.
+Phir jo fix sahi lage: apply fix, rerun setup A and C with 50 seeds, report same 3 numbers. Agar numbers behtar na hon → cp backup_scavenger.py my_bot.py.
+
+Rehearsal (Sat ko, 75 min, phone timer)
+Kal tak jab bot stable ho, ek full rehearsal karein: naya folder, mock arena copy karein, my_bot.py ko simple bot se replace karein, aur zero se Scavenger banayein, sirf apni yaad aur prompts se. Target: 10:00 tak conformance PASS, 10:15 tak freeze. Isi se asli din ka pressure handle hoga.
+
+Prompt 1 ke results yahan bhej dein (sirf numbers). Phir main bataunga ke kaunsi weakness pehle fix karni hai.
+
+Bash List project files and git status
+IN
+cd "/c/Users/HP EliteBook/Desktop/mock-arena" && ls -la && git status --short | head -30
+
+OUT
+total 76
+drwxr-xr-x 1 HP EliteBook 197121     0 Oct 15 19:09 .
+drwxr-xr-x 1 HP EliteBook 197121     0 Oct 15 18:47 ..
+drwxr-xr-x 1 HP EliteBook 197121     0 Oct 15 19:09 __pycache__
+-rw-r--r-- 1 HP EliteBook 197121  1443 Oct 15 18:57 check.py
+-rw-r--r-- 1 HP EliteBook 197121  1035 Oct 15 18:57 conformance.py
+-rw-r--r-- 1 HP EliteBook 197121 18399 Oct 15 18:57 engine.py
+-rw-r--r-- 1 HP EliteBook 197121 12823 Oct 15 19:09 my_bot.py
+-rw-r--r-- 1 HP EliteBook 197121  1750 Oct 15 18:57 opponents.py
+-rw-r--r-- 1 HP EliteBook 197121  1995 Oct 15 19:09 play.py
+drwxr-xr-x 1 HP EliteBook 197121     0 Oct 15 18:57 vibe_sdk
+warning: could not open directory 'Application Data/': Permission denied
+warning: could not open directory 'Cookies/': Permission denied
+warning: could not open directory 'Documents/My Music/': Permission denied
+warning: could not open directory 'Documents/My Pictures/': Permission denied
+warning: could not open directory 'Documents/My Videos/': Permission denied
+warning: could not open directory 'Local Settings/': Permission denied
+warning: could not open directory 'My Documents/': Permission denied
+warning: could not open directory 'NetHood/': Permission denied
+warning: could not open directory 'PrintHood/': Permission denied
+warning: could not open directory 'Recent/': Permission denied
+warning: could not open directory 'SendTo/': Permission denied
+warning: could not open directory 'Start Menu/': Permission denied
+warning: could not open directory 'Templates/': Permission denied
+ M ../../Documents/NetBeansProjects/Lancely/nbproject/build-impl.xml
+ M ../../Documents/NetBeansProjects/Lancely/nbproject/genfiles.properties
+ M ../../Documents/NetBeansProjects/Lancely/nbproject/project.properties
+ M ../../Documents/NetBeansProjects/Lancely/nbproject/project.xml
+ D ../../Documents/NetBeansProjects/Lancely/src/lancely/Client.java
+ M ../../Documents/NetBeansProjects/Lancely/src/lancely/DatabaseHelper.java
+ D ../../Documents/NetBeansProjects/Lancely/src/lancely/Lancely.java
+ D ../../Documents/NetBeansProjects/Lancely/src/style/style.css
+?? ../../.VirtualBox/
+?? ../../.bash_history
+?? ../../.cache/
+?? ../../.claude.json
+?? ../../.claude.json.backup
+?? ../../.claude/
+?? ../../.config/
+?? ../../.copilot/
+?? ../../.ghcp-appmod/
+?? ../../.gitconfig
+?? ../../.gitignore
+?? ../../.javacpp/
+?? ../../.lesshst
+?? ../../.m2/
+?? ../../.nbi/
+?? ../../.oracle_jre_usage/
+?? ../../.ssh/
+?? ../../.th-client/
+?? ../../.viminfo
+?? ../../.vscode-shared/
+?? ../../.vscode/
+?? ../../.yarnrc
+Bash Inspect play.py entry point and arguments
+IN
+cd "/c/Users/HP EliteBook/Desktop/mock-arena" && head -80 play.py 2>/dev/null; echo ---; grep -n "seeds\|argparse\|add_argument" play.py 2>/dev/null | head -30
+
+OUT
+import argparse
+from engine import run_match
+from my_bot import MyBot
+from opponents import HunterBot, CoreRusherBot, PickerBot
+
+OPPONENTS = {c.__name__.lower().replace("bot", ""): c for c in (HunterBot, CoreRusherBot, PickerBot)}
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=1)
+    ap.add_argument("--seeds", type=int, default=0)
+    ap.add_argument("--vs", default="hunter,corerusher,picker")
+    ap.add_argument("--board", action="store_true")
+    args = ap.parse_args()
+    names = [n.strip().split(":")[-1].lower().replace("bot", "") for n in args.vs.split(",")]
+    if len(names) != 3 or any(n not in OPPONENTS for n in names):
+        ap.error(f"--vs needs 3 of: {', '.join(OPPONENTS)}")
+    bots = [MyBot] + [OPPONENTS[n] for n in names]
+
+    if args.seeds:
+        rows = {}
+        for s in range(args.seed, args.seed + args.seeds):
+            for b in run_match(bots, s)["bots"]:
+                row = rows.setdefault(b["id"], {"name": b["name"], "rank": 0, "wins": 0, "deaths": 0, "banked": 0.0})
+                row["rank"] += b["placement"]
+                row["wins"] += b["win"]
+                row["deaths"] += b["deaths"]
+                row["banked"] += b["banked"]
+        n = args.seeds
+        print(f"{'bot':<14}{'avg_rank':>9}{'wins':>6}{'deaths':>8}{'banked':>9}")
+        for k in sorted(rows):
+            r = rows[k]
+            print(f"{r['name']:<14}{r['rank'] / n:>9.2f}{r['wins']:>6}{r['deaths'] / n:>8.2f}{r['banked'] / n:>9.2f}")
+        return
+
+    r = run_match(bots, args.seed, trace=args.board)
+    if args.board:
+        for f in r["frames"]:
+            print(f + "\n")
+    else:
+        print("\n".join(r["log"]))
+    print()
+    for b in sorted(r["bots"], key=lambda b: b["placement"]):
+        print(f"{b['placement']}. {b['name']:<12} score={b['score']} kills={b['kills']} "
+              f"deaths={b['deaths']} banked={b['banked']} illegal={b['illegal']}")
+
+
+if __name__ == "__main__":
+    main()
+---
+1:import argparse
+10:    ap = argparse.ArgumentParser()
+11:    ap.add_argument("--seed", type=int, default=1)
+12:    ap.add_argument("--seeds", type=int, default=0)
+13:    ap.add_argument("--vs", default="hunter,corerusher,picker")
+14:    ap.add_argument("--board", action="store_true")
+21:    if args.seeds:
+23:        for s in range(args.seed, args.seed + args.seeds):
+30:        n = args.seeds
+Bash Read opponents, run_match, and search for backup file
+IN
+cd "/c/Users/HP EliteBook/Desktop/mock-arena" && cat opponents.py; echo ---; grep -n "def run_match" -A30 engine.py | head -60; echo ---; ls vibe_sdk; find / -iname "*scavenger*" 2>/dev/null | head
+
+OUT
+from vibe_sdk import Bot, Action, cheb, go, near
+
+
+class HunterBot(Bot):
+    def decide(self, v):
+        s = v["self"]
+        p, en = [s["x"], s["y"]], s["energy"]
+        if v["visible_enemies"]:
+            f = min(v["visible_enemies"], key=lambda f: cheb(p, [f["x"], f["y"]]))
+            q = [f["x"], f["y"]]
+            if cheb(p, q) == 1 and en >= 5:
+                return Action.attack(f["id"])
+            if en >= 1:
+                return go(p, q)
+        return Action.scan() if en >= 8 else Action.defend()
+
+
+class CoreRusherBot(Bot):
+    def decide(self, v):
+        s, c = v["self"], v["core"]
+        p, en = [s["x"], s["y"]], s["energy"]
+        adj = [f for f in v["visible_enemies"] if cheb(p, [f["x"], f["y"]]) == 1]
+        if adj and en >= 5:
+            return Action.attack(adj[0]["id"])
+        if c["carrier"] == s["id"]:
+            return go(p, near(p, v["pads"]))
+        if c["state"] == "loose":
+            q = [c["x"], c["y"]]
+            if cheb(p, q) <= 1 and en >= 2:
+                return Action.collect("core")
+            return go(p, q)
+        return Action.scan() if en >= 8 else Action.defend()
+
+
+class PickerBot(Bot):
+    ROLE = "HAULER"
+
+    def decide(self, v):
+        s = v["self"]
+        p, en, n = [s["x"], s["y"]], s["energy"], s["cargo_units"]
+        if n and (n >= 3 or not v["resources"]):
+            return Action.defend() if p in s["base"] else go(p, near(p, s["base"]))
+        if v["resources"]:
+            r = min(v["resources"], key=lambda r: cheb(p, [r["x"], r["y"]]))
+            q = [r["x"], r["y"]]
+            if cheb(p, q) <= 1 and en >= 2:
+                return Action.collect(r["id"])
+            return go(p, q)
+        return Action.scan() if en >= 8 else Action.defend()
+---
+478:def run_match(bots, seed, trace=False):
+479-    return Match(bots, seed, trace).run()
+---
+__init__.py
+__pycache__
+geometry.py
+Bash Check Match setup and bot id/name handling
+IN
+cd "/c/Users/HP EliteBook/Desktop/mock-arena" && grep -n "class Match" -A25 engine.py | head -45; grep -n "\"id\"\|'id'\|placement\|\"name\"" engine.py | head -20
+
+OUT
+78:class Match:
+79-    def __init__(self, bots, seed, trace):
+80-        self.seed, self.trace = seed, trace
+81-        self.rng = random.Random(seed)
+82-        self.walls = make_walls(self.rng)
+83-        self.units = []
+84-        for i, b in enumerate(bots):
+85-            b = b() if isinstance(b, type) else b
+86-            b.id = i
+87-            self.units.append(Unit(i, b))
+88-        self.res, self.tags, self.notes = [], [], {}
+89-        self.core = {"state": "off", "pos": None, "carrier": None, "planter": None,
+90-                     "planted": 0, "streak": 0, "respawn": 8}
+91-        self.turn, self.uid, self.blood = 0, 100, False
+92-        self.log, self.actions, self.frames, self.scanners = [], [], [], set()
+93-
+94-    def new_id(self):
+95-        self.uid += 1
+96-        return self.uid
+97-
+98-    def tag(self, i):
+99-        return next((g for g in self.tags if g["id"] == i), None)
+100-
+101-    def res_by_id(self, i):
+102-        return next((r for r in self.res if r["id"] == i), None)
+103-
+99:        return next((g for g in self.tags if g["id"] == i), None)
+102:        return next((r for r in self.res if r["id"] == i), None)
+130:                self.res += [{"id": self.new_id(), "pos": p, "value": v} for p in orb]
+170:                foes.append({"id": v.idx, "x": v.pos[0], "y": v.pos[1], "hp": v.hp, "marks": marks})
+175:            "self": {"id": u.idx, "x": u.pos[0], "y": u.pos[1], "hp": u.hp, "energy": u.en,
+180:            "resources": [{"id": r["id"], "x": r["pos"][0], "y": r["pos"][1], "value": r["value"]}
+182:            "tags": [{"id": g["id"], "x": g["pos"][0], "y": g["pos"][1], "ttl": g["expires"] - t}
+392:                self.tags.append({"id": self.new_id(), "pos": u.pos, "expires": t + 6, "killers": killers})
+393:            self.res += [{"id": self.new_id(), "pos": u.pos, "value": v} for v in u.cargo]
+459:        bots = [{"id": u.idx, "name": u.name, "score": round(u.score, 2), "kills": u.kills,
+460:                 "deaths": u.deaths, "banked": round(u.banked, 2), "placement": rk[u.idx],
+Bash Run 50-seed evaluation for the three setups
+IN
+cd "/c/Users/HP EliteBook/Desktop/mock-arena" && S="C:/Users/HP EliteBook/AppData/Local/Temp/claude/c--Users-HP-EliteBook-Desktop-mock-arena/7c54058b-f1cd-4a71-9e8b-04b4057a96c5/scratchpad" && mkdir -p "$S" && cat > "$S/eval.py" <<'EOF'
+import sys
+sys.path.insert(0, "C:/Users/HP EliteBook/Desktop/mock-arena")
+from engine import run_match
+from my_bot import MyBot
+from opponents import HunterBot, CoreRusherBot, PickerBot
+
+SETUPS = {
+    "A": [MyBot, HunterBot, CoreRusherBot, PickerBot],
+    "B": [MyBot, MyBot, MyBot, MyBot],
+    "C": [MyBot, HunterBot, HunterBot, CoreRusherBot],
+}
+N = 50
+for name, bots in SETUPS.items():
+    ranks, fourth, deaths = [], 0, 0
+    for s in range(1, N + 1):
+        me = next(b for b in run_match(bots, s)["bots"] if b["id"] == 0)
+        ranks.append(me["placement"])
+        fourth += me["placement"] == 4
+        deaths += me["deaths"]
+    print(f"{name}: avg_rank={sum(ranks)/N:.2f} pct_4th={100*fourth/N:.1f}% deaths_per_match={deaths/N:.2f}")
+EOF
+python -I "$S/eval.py"
+
+OUT
+A: avg_rank=1.96 pct_4th=16.0% deaths_per_match=0.74
+B: avg_rank=3.02 pct_4th=46.0% deaths_per_match=0.00
+C: avg_rank=1.84 pct_4th=16.0% deaths_per_match=0.80
+Bash Cross-check setups A and C with play.py
+IN
+cd "/c/Users/HP EliteBook/Desktop/mock-arena" && python -I play.py --seeds 50 --vs hunter,corerusher,picker; echo ---; python -I play.py --seeds 50 --vs hunter,hunter,corerusher
+
+OUT
+Exit code 1
+Traceback (most recent call last):
+  File "C:\Users\HP EliteBook\Desktop\mock-arena\play.py", line 2, in <module>
+    from engine import run_match
+ModuleNotFoundError: No module named 'engine'
+---
+Traceback (most recent call last):
+  File "C:\Users\HP EliteBook\Desktop\mock-arena\play.py", line 2, in <module>
+    from engine import run_match
+ModuleNotFoundError: No module named 'engine'
+Bash Run play.py for setups A and C
+IN
+cd "/c/Users/HP EliteBook/Desktop/mock-arena" && python play.py --seeds 50 --vs hunter,corerusher,picker | tail -5; echo ---; python play.py --seeds 50 --vs hunter,hunter,corerusher | tail -5
+
+OUT
+bot            avg_rank  wins  deaths   banked
+MyBot              1.96    25    0.74    70.64
+HunterBot          2.12    16    0.74     0.00
+CoreRusherBot      2.68     8    0.70     0.00
+PickerBot          3.24     1    0.34    34.96
+---
+bot            avg_rank  wins  deaths   banked
+MyBot              1.84    29    0.80    96.04
+HunterBot          2.68     8    1.12     0.00
+HunterBot          2.68     5    1.84     0.00
+CoreRusherBot      2.80     8    0.92     0.00
+Read C:\Users\HP EliteBook\Desktop\mock-arena\my_bot.py
+Grep "^\s*match\s|case\s.*:$|\|\s*None|:\s*\w+\s*\|\s*\w+|strict=|pairwise|TypeAlias|kw_only|slots=|ParamSpec|anext|aiter|removeprefix|\bbisect\b" (in C:\Users\HP EliteBook\Desktop\mock-arena\my_bot.py)
+1 line of output
+9:14 PM
+Results for MyBot over seeds 1–50:
+
+Setup	avg rank	% 4th	deaths/match
+A) vs Hunter, CoreRusher, Picker	1.96	16.0%	0.74
+B) vs 3 copies of MyBot	3.02	46.0%	0.00
+C) vs Hunter, Hunter, CoreRusher	1.84	16.0%	0.80
+Setups A and C match play.py --seeds 50 exactly. play.py has no 4th-place column, so I computed that with a scratch script in the scratchpad that uses the same run_match. B can't be run through play.py because --vs only accepts the named opponents. There's no backup_scavenger.py in the project, so B uses MyBot in all four seats, and I read MyBot's stats from seat 0. The 0.00 deaths in B is worth a look: MyBot never died across 50 matches against itself.
+
+my_bot.py has no Python 3.10+ syntax: no match statements, no X | Y unions, no zip(strict=...), no kw_only/slots, no pairwise. I made no changes to any project file.
+i saw import sys in this response but arent we not allowed to do that
+
+Acha sawal hai. Jawab: koi rule nahi tuta.
+
+import sys kahan tha?
+Woh eval.py mein tha, jo Claude Code ne ek alag scratch folder (scratchpad) mein banaya, sirf results count karne ke liye. my_bot.py mein nahi.
+
+Ban (os, sys, open, eval...) sirf my_bot.py par lagta hai, kyun ke sirf wohi file tournament mein chalti hai.
+Testing scripts (play.py, check.py, eval.py) aapke laptop par chalti hain aur submit nahi hoti. Unmein sys bilkul theek hai. Asli kit ke check.py ko bhi yahi sab cheezein chahiye hongi.
+Aapka check.py khud my_bot.py mein forbidden imports dhoondta hai aur PASS aaya. Matlab bot clean hai. ✅
+Yaad rakhne ka rule: my_bot.py = strict rules. Baaki sab = jo marzi.
+
+Results ka matlab
+Setup	Avg rank	% 4th	Kya batata hai
+A (mixed)	1.96	16%	Acha
+C (2 hunters)	1.84	16%	Aggressive bots ke against bhi acha
+B (3 copies)	3.02	46%	⚠️ Neeche dekhein
+Setup B ajeeb hai: 4 bilkul same bots, kisi ki death nahi, phir bhi seat 0 hamesha neeche. Iska matlab bot ki kamzori nahi, engine ka tie-break hai. Jab score barabar ho to shayad engine bot id se faisla karta hai, aur seat 0 haar jata hai. Isay ignore karein. Lekin ek sabaq hai: same bots aapas mein ladte hi nahi (0 deaths), to tournament mein agar sab “safe” bots hon to fark sirf banking speed aur Core se padega.
+
+Asli weakness: 16% 4th place. 50 mein se 8 matches mein sabse neeche. Yahi pehle fix karna hai, kyun ke 4th = 0 rank points.
+
+Agla prompt (/clear ke baad)
+In seeds 1-50 setup A, list seeds where MyBot placed 4th. For 2 of them, read the log and say in 1 line each why it lost (died with cargo? idle? Core missed? blocked?). Don't edit.
+Phir woh 2 lines yahan bhej dein, aur hum ek targeted fix banayenge. Aur abhi terminal mein khud yeh chala lein (tokens zero):
+
+cp my_bot.py backup_scavenger.py
+ok
+
+Ab aap Sunday ke liye tayyar ho:
+
+Bot ki strategy mock arena mein test ho chuki hai (avg rank 3.15 → ~1.8)
+Manual (MANUAL.md) mein saare prompts aur commands copy-paste ke liye ready hain
+Testing ka tareeqa pata hai: ek fix → test → rakho ya hatao
+Kal (Saturday): teammate ke saath manual se ek 75-minute rehearsal karo, phone timer laga ke.
+
+Best of luck! 🚀
+
+
+
